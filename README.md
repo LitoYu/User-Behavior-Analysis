@@ -2,19 +2,20 @@
 电信运营商在竞争日益激烈的今天，如何挽留更多用户成为一项关键的业务指标。这就需要了解流失用户的特征，
 分析流失的原因，预测流失用户，确定挽留目标用户并制定有效方案。
 
-一、分析目标
+## 一、分析目标
 1. 流失用户都有什么共同的特征？
 2. 找出用户流失的原因。
 3. 预测流失的用户。
 4. 对可能流失的用户制定有效的方案来挽留用户。
 
-二、理解数据
+## 二、理解数据
 
 数据源来自于[Kaggle](https://www.kaggle.com/blastchar/telco-customer-churn/home)
 
 本数据集描述了电信用户是否流失以及其相关信息，共包含7044条数据，共21个字段，分别介绍如下：
 
 ***用户属性***
+
 customerID ： 用户ID。
 
 gender：性别。（Female & Male）
@@ -65,17 +66,17 @@ TotalCharges：总费用
 
 Churn：该用户是否流失（Yes or No）
 
-##三、导入数据并进行清洗
+## 三、导入数据并进行清洗
 
-1. 在MySQL中创建数据库
+#### 1. 在MySQL中创建数据库
 
 ```
 CREATE DATABASE 电信流失用户;
 ```
 
-2. 使用navicat将数据集导入到MySQL中映射成表
+#### 2. 使用navicat将数据集导入到MySQL中映射成表
 
-3. 将列名翻译成中文
+#### 3. 将列名翻译成中文
 
 ```
 BEGIN;
@@ -103,7 +104,7 @@ ALTER TABLE 流失表 CHANGE Churn 是否流失 VARCHAR(20);
 COMMIT;
 ```
 
-4. 数据一致化
+#### 4. 数据一致化
 
 除了ID和累计付费列，将表中英文数据替换为中文，将在网时长和月租费两列进行分档。
 
@@ -148,13 +149,13 @@ WHEN 月租费 BETWEEN 100.01 AND 120.00  THEN '5档'
 	END);-- 月付费分档
 COMMIT;
 ```
-5. 将在网时长短的新用户从数据集中剔除。
+#### 5. 将在网时长短的新用户从数据集中剔除。
 ```
 DELETE FROM 流失表 WHERE 在网时长='新用户';
 ```
-6. 最后将清洗后的流失表导出为csv文件
-##四、用Python对数据进行分析
-#####4.1. 读取数据
+#### 6. 最后将清洗后的流失表导出为csv文件
+## 四、用Python对数据进行分析
+#### 4.1. 读取数据
 ```
 import numpy as np
 import pandas as pd
@@ -167,25 +168,25 @@ df.head(10)
 读取后的数据如下所示。
 ![1.png](https://upload-images.jianshu.io/upload_images/15578485-c2ff6a98fa6162b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-#####4.2. 查看数据集大小
+#### 4.2. 查看数据集大小
 ![2](https://upload-images.jianshu.io/upload_images/15578485-661750f56b136817.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-#####4.3. 数据归一化处理
+#### 4.3. 数据归一化处理
 将是否流失这一列中的“是”转化为1，将“否”转化为0。
 ![3](https://upload-images.jianshu.io/upload_images/15578485-2cd80413be365b3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-#####4.4. 数据可视化呈现
-######4.4.1 导入绘图包
+#### 4.4. 数据可视化呈现
+###### 4.4.1 导入绘图包
 ![4](https://upload-images.jianshu.io/upload_images/15578485-8a1f4744c36e4fcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-######4.4.2 查看客户流失占比
+###### 4.4.2 查看客户流失占比
 ![客户流失占比](https://upload-images.jianshu.io/upload_images/15578485-18983da8784726ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 从上图可以看出总的用户流失率为26.6%.
-######4.4.3 从用户属性角度来看用户属性对流失率的影响
+###### 4.4.3 从用户属性角度来看用户属性对流失率的影响
 ![用户属性对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-4e7f8f4370f60a46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![用户属性对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-cb302f27e0b9786f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 通过观察可以得出性别对用户的流失情况几乎没有影响，而老年用户中流失占比明显要比非老年用户的流失占比要高，单身用户中的流失占比也要比非单身用户的流失占比要高，非亲属用户的的流失占比要比亲属用户的流失占比要高。
-######4.4.3 对特征进行相关性分析 
+###### 4.4.4 对特征进行相关性分析 
 提取特征并对特征进行编码
 ![提取特征并对特征进行编码](https://upload-images.jianshu.io/upload_images/15578485-57300bc2a4833c3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ![提取特征并对特征进行编码](https://upload-images.jianshu.io/upload_images/15578485-64e388663bc28d7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -197,16 +198,16 @@ df.head(10)
 ![变量间的相关性](https://upload-images.jianshu.io/upload_images/15578485-2d3ac8b699b4a0c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 观察上图得出电话服务与多线服务之间较强的相关性，上网服务、网络安全
 、网络备份、设备保护、技术支持、在线电视、在线电影之间也存在较强的相关性，而且都是正相关。
-######4.4.4 用户流失与各变量之间的相关性
+###### 4.4.5 用户流失与各变量之间的相关性
 ![用户流失与各变量之间的相关性](https://upload-images.jianshu.io/upload_images/15578485-6c0b9a7f6ccbb564.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 从上图可以看出性别与电话服务对用户是否流失几乎没有影响。
-######4.4.5从上网服务角度来看上网服务对用户流失的影响
+###### 4.4.6从上网服务角度来看上网服务对用户流失的影响
 ![上网服务对用户流失的影响](https://upload-images.jianshu.io/upload_images/15578485-92462c70a051f495.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 通过观察可知没有开通网络安全、网络备份、设备保护、技术支持的用户的流失占比要开通的用户要高。
-######4.4.6从合同属性的角度来看不同的签订方式对流失率的影响
+###### 4.4.7从合同属性的角度来看不同的签订方式对流失率的影响
 ![不同的签订方式对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-b34e70a18282e269.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 合同期越长流失率就月低
-######4.4.7 付款方式对流失率的影响
+###### 4.4.8 付款方式对流失率的影响
 ![付款方式对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-f96d5ea9bacc999a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 通过电子支票付款的用户的流失率要远远高于其他付款的方式。
 ##总结与结论
