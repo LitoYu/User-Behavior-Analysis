@@ -153,8 +153,11 @@ COMMIT;
 ```
 DELETE FROM 流失表 WHERE 在网时长='新用户';
 ```
+
 #### 6. 最后将清洗后的流失表导出为csv文件
+
 ## 四、用Python对数据进行分析
+
 #### 4.1. 读取数据
 ```
 import numpy as np
@@ -165,59 +168,102 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('流失表.csv')
 df.head(10)
 ```
+
 读取后的数据如下所示。
+
 ![1.png](https://upload-images.jianshu.io/upload_images/15578485-c2ff6a98fa6162b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 4.2. 查看数据集大小
+
 ![2](https://upload-images.jianshu.io/upload_images/15578485-661750f56b136817.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 #### 4.3. 数据归一化处理
+
 将是否流失这一列中的“是”转化为1，将“否”转化为0。
+
 ![3](https://upload-images.jianshu.io/upload_images/15578485-2cd80413be365b3e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 #### 4.4. 数据可视化呈现
+
 ###### 4.4.1 导入绘图包
+
 ![4](https://upload-images.jianshu.io/upload_images/15578485-8a1f4744c36e4fcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ###### 4.4.2 查看客户流失占比
+
 ![客户流失占比](https://upload-images.jianshu.io/upload_images/15578485-18983da8784726ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 从上图可以看出总的用户流失率为26.6%.
+
 ###### 4.4.3 从用户属性角度来看用户属性对流失率的影响
+
 ![用户属性对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-4e7f8f4370f60a46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![用户属性对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-cb302f27e0b9786f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 通过观察可以得出性别对用户的流失情况几乎没有影响，而老年用户中流失占比明显要比非老年用户的流失占比要高，单身用户中的流失占比也要比非单身用户的流失占比要高，非亲属用户的的流失占比要比亲属用户的流失占比要高。
+
 ###### 4.4.4 对特征进行相关性分析 
+
 提取特征并对特征进行编码
+
 ![提取特征并对特征进行编码](https://upload-images.jianshu.io/upload_images/15578485-57300bc2a4833c3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ![提取特征并对特征进行编码](https://upload-images.jianshu.io/upload_images/15578485-64e388663bc28d7f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 构建相关性矩阵
+
 ![构建相关性矩阵](https://upload-images.jianshu.io/upload_images/15578485-5bdfb349d542744f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 使用热力图显示相关系数
+
 ![使用热力图显示相关系数](https://upload-images.jianshu.io/upload_images/15578485-3ef461c318235c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ![变量间的相关性](https://upload-images.jianshu.io/upload_images/15578485-2d3ac8b699b4a0c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-观察上图得出电话服务与多线服务之间较强的相关性，上网服务、网络安全
-、网络备份、设备保护、技术支持、在线电视、在线电影之间也存在较强的相关性，而且都是正相关。
+
+观察上图得出电话服务与多线服务之间较强的相关性，上网服务、网络安全、
+网络备份、设备保护、技术支持、在线电视、在线电影之间也存在较强的相关性，而且都是正相关。
+
 ###### 4.4.5 用户流失与各变量之间的相关性
+
 ![用户流失与各变量之间的相关性](https://upload-images.jianshu.io/upload_images/15578485-6c0b9a7f6ccbb564.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 从上图可以看出性别与电话服务对用户是否流失几乎没有影响。
+
 ###### 4.4.6从上网服务角度来看上网服务对用户流失的影响
+
 ![上网服务对用户流失的影响](https://upload-images.jianshu.io/upload_images/15578485-92462c70a051f495.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 通过观察可知没有开通网络安全、网络备份、设备保护、技术支持的用户的流失占比要开通的用户要高。
+
 ###### 4.4.7从合同属性的角度来看不同的签订方式对流失率的影响
+
 ![不同的签订方式对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-b34e70a18282e269.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 合同期越长流失率就月低
+
 ###### 4.4.8 付款方式对流失率的影响
+
 ![付款方式对流失率的影响](https://upload-images.jianshu.io/upload_images/15578485-f96d5ea9bacc999a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 通过电子支票付款的用户的流失率要远远高于其他付款的方式。
+
 ##总结与结论
+
 总结：
+
 1. 老年用户、单身用户以及非亲属用户是易流失人群。
+
 2. 电话服务对用户的流失没有直接的影响。
+
 3. 对于开通了上网服务的用户，开通网络安全、网路备份、设备保护、技术支持这些服务可以有效的降低流失率。
+
 4. 签订的合同期越长用户的流失率就越低。
+
 5. 付款方式为电子支票的用户的流失率要高于其他用户。
 
 建议：
+
 1. 可以针对老年用户、单身用户以及非亲属用户展开优惠促销活动，激励用户签订较长时间的合同，并开通上网服务及相关网络服务（可以增加用户粘性）。
+
 2. 优化电子支票付款的使用体验，或者诱导用户选择其它的付款方式。
